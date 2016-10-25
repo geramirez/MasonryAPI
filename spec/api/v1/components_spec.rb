@@ -3,28 +3,34 @@ require 'rails_helper'
 RSpec.describe 'Components API' do
   describe '/api/v1/components' do
 
-    let(:base_url) { '/api/v1/components' }
-
-    before(:each) do
-      Component.create(name: 'test', key: 'key', documentation_complete: 'partial')
+    let!(:test_component) do
+      component = Component.create(name: 'test', key: 'key', documentation_complete: 'partial')
+      component.references.create!(name: 'ref-name', path: '/ref-name', kind: 'image')
+      component
     end
+
+    let(:base_url) { '/api/v1/components' }
 
     it 'returns a list of components' do
       get base_url
       json = JSON.parse(response.body)
-      expect(json['components'].length).to eq(1)
+      expect(json['components']).not_to be_empty
     end
 
-    it 'returns a list of components with names' do
+    it 'returns a list of components with name data' do
       get base_url
       json = JSON.parse(response.body)
       expect(json['components'][0]['name']).to eq('test')
     end
 
-    it 'returns a list of components with key' do
-      get base_url
-      json = JSON.parse(response.body)
-      expect(json['components'][0]['key']).to eq('key')
+    describe '/api/v1/component/:id/' do
+      it 'returns name, key, and documentation_complete' do
+        get base_url + "/#{test_component.id}"
+        json = JSON.parse(response.body)
+        expect(json['name']).to eq('test')
+        expect(json['key']).to eq('key')
+        expect(json['documentation_complete']).to eq('partial')
+      end
     end
 
     it 'returns a list of components with documentation_complete' do
@@ -32,7 +38,5 @@ RSpec.describe 'Components API' do
       json = JSON.parse(response.body)
       expect(json['components'][0]['documentation_complete']).to eq('partial')
     end
-
-
   end
 end
