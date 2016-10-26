@@ -33,10 +33,24 @@ RSpec.describe 'Components API' do
       end
     end
 
-    it 'returns a list of components with documentation_complete' do
-      get base_url
-      json = JSON.parse(response.body)
-      expect(json['components'][0]['documentation_complete']).to eq('partial')
+    describe '/api/v1/component/:id/references' do
+      it 'returns a list of references' do
+        get base_url + "/#{test_component.id}/references/"
+        json = JSON.parse(response.body)
+        expect(json['references']).to_not be_empty
+      end
     end
+
+    describe '/api/v1/component/:id/references/:id' do
+      it 'returns a single reference' do
+        get base_url + \
+          "/#{test_component.id}/references/#{test_component.references.first.id}/"
+        json = JSON.parse(response.body)
+        expect(json['name']).to eq('ref-name')
+        expect(json['path']).to eq('/ref-name')
+        expect(json['kind']).to eq('image')
+      end
+    end
+
   end
 end
