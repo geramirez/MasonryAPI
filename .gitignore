@@ -17,5 +17,8 @@
 !/log/.keep
 !/tmp/.keep
 
+# Ignore mac files
+.DS_Store
+
 # Ignore Byebug command history file.
 .byebug_history
