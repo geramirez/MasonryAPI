@@ -15,7 +15,7 @@ ActiveRecord::Schema.define(version: 20161024222730) do
   create_table "components", force: :cascade do |t|
     t.string   "name"
     t.string   "key"
-    t.string   "documentation_complete"
+    t.boolean  "documentation_complete"
     t.string   "schema_version"
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false

@@ -3,7 +3,7 @@ class CreateComponents < ActiveRecord::Migration[5.0]
     create_table :components do |t|
       t.string :name
       t.string :key
-      t.string :documentation_complete
+      t.boolean :documentation_complete
       t.string :schema_version
       t.timestamps
     end
