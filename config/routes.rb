@@ -3,7 +3,9 @@ Rails.application.routes.draw do
   scope '/api' do
     scope '/v1' do
       resources :components, only: [:index, :show] do
+        # TODO: find a better of using these controllers
         resources :references, only: [:index, :show]
+        resources :verifications, only: [:index, :show]
       end
     end
   end

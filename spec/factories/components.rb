@@ -16,4 +16,14 @@ FactoryGirl.define do
     association :component, factory: :component
   end
 
+  factory :verification do
+    name 'AU Validation'
+    key  'au-validation'
+    path 'https://github.com/opencontrol/freedonia-policies/wiki/Audit-Policy'
+    kind 'URL'
+    after(:create) do |verification|
+      verification.components << create(:component)
+    end
+  end
+
 end

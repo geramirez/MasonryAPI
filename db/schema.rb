@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161024222730) do
+ActiveRecord::Schema.define(version: 20161106135514) do
 
   create_table "components", force: :cascade do |t|
     t.string   "name"
@@ -21,6 +21,13 @@ ActiveRecord::Schema.define(version: 20161024222730) do
     t.datetime "updated_at",             null: false
   end
 
+  create_table "components_verifications", id: false, force: :cascade do |t|
+    t.integer "component_id"
+    t.integer "verification_id"
+    t.index ["component_id"], name: "index_components_verifications_on_component_id"
+    t.index ["verification_id"], name: "index_components_verifications_on_verification_id"
+  end
+
   create_table "references", force: :cascade do |t|
     t.string   "name"
     t.string   "path"
@@ -29,6 +36,15 @@ ActiveRecord::Schema.define(version: 20161024222730) do
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
     t.index ["component_id"], name: "index_references_on_component_id"
+  end
+
+  create_table "verifications", force: :cascade do |t|
+    t.string   "name"
+    t.string   "key"
+    t.string   "path"
+    t.string   "kind"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end
