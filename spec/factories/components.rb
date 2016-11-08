@@ -26,4 +26,10 @@ FactoryGirl.define do
     end
   end
 
+  factory :satisfy do
+    standard_key 'Standard Key (NIST-800-53)'
+    control_key  'Control Key (CM-2)'
+    association :component, factory: :component
+  end
+
 end

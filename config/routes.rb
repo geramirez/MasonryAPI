@@ -6,6 +6,7 @@ Rails.application.routes.draw do
         # TODO: find a better of using these controllers
         resources :references, only: [:index, :show]
         resources :verifications, only: [:index, :show]
+        resources :satisfies, only: [:index, :show]
       end
     end
   end

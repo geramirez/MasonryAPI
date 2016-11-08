@@ -70,8 +70,27 @@ RSpec.describe 'Components API' do
           expect(json_response['kind']).to eq('URL')
         end
       end
-
     end
 
+    context 'satisfies' do
+      before(:all) { FactoryGirl.create(:satisfy) }
+
+      describe '/api/v1/component/:id/satisfies' do
+        it 'returns a list of satisfies' do
+          get base_url + "/#{test_component.id}/satisfies/"
+          expect(json_response['satisfies']).to_not be_empty
+        end
+      end
+
+      describe '/api/v1/component/:id/satisfies/:id' do
+        it 'returns a single satisfy' do
+          satisfies_path = "/#{test_component.id}/satisfies/#{test_component.satisfies.first.id}/"
+          get base_url + satisfies_path
+          expect(json_response['standard_key']).to eq('Standard Key (NIST-800-53)')
+          expect(json_response['control_key']).to  eq('Control Key (CM-2)')
+        end
+      end
+
+    end
   end
 end
