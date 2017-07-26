@@ -9,6 +9,7 @@
     "babel-preset-env": "^1.6.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
     "coffee-loader": "^0.7.3",
     "coffee-script": "^1.12.7",
     "compression-webpack-plugin": "^1.0.0",
@@ -42,6 +43,7 @@
   "scripts": {
     "beforetests": "rails db:drop && rails db:migrate && rails s -d",
     "aftertests": "kill -15 $(lsof -i tcp:3000 -t)",
-    "test": "yarn run beforetests && mocha app/javascript/test --compilers js:babel-register && yarn run aftertests"
+    "onlytests": "mocha app/javascript/test --compilers js:babel-register --require babel-polyfill",
+    "test": "yarn run beforetests && mocha app/javascript/test --compilers js:babel-register --require babel-polyfill && yarn run aftertests"
   }
 }
